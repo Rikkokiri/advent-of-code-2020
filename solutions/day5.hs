@@ -3,8 +3,10 @@ import System.IO
 -- Day 5: Binary Boarding
 -- What is the highest seat ID on a boarding pass?
 
-maxId :: [String] -> Int
-maxId ls = maximum ( map (\x -> seatHelper x 0 127) ls )
+seatIds :: [String] -> [Int]
+seatIds ls = map (\x -> seatHelper x 0 127) ls
+
+missingId :: [Int]
 
 seatHelper :: [Char] -> Int -> Int -> Int
 seatHelper [] ll ul = ul
@@ -17,11 +19,11 @@ column [] ll ul = ul
 column ('R':xs) ll ul = column xs ((div (ul + ll) 2) + 1) ul
 column ('L':xs) ll ul = column xs ll (div (ul + ll) 2)
 
-
 readLines :: FilePath -> IO [String]
 readLines = fmap lines . readFile
+
 
 main ::  IO()
 main = do
   filecontent <- readLines "day5.txt"
-  print (maxId filecontent)
+  print (maximum (maxId filecontent))
